@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       delete 'logout', to: 'users#logout'
     end
 
+    # Return a JSON response for the root path
+    root to: proc { [200, {}, ['{"message": "API is running"}']] }
   end
   end
 
