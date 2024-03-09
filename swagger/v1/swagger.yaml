@@ -1,0 +1,182 @@
+openapi: 3.0.0
+info:
+  title: API V1
+  version: v1
+  description: API for managing boat reservations
+
+paths:
+  /api/boats:
+    get:
+      summary: Get all boats
+      responses:
+        '200':
+          description: A list of boats
+    post:
+      summary: Create a new boat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Boat'
+      responses:
+        '200':
+          description: Created
+
+  /api/boats/{id}:
+    get:
+      summary: Get a specific boat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Boat ID
+      responses:
+        '200':
+          description: Boat details
+
+  /api/reservations:
+    get:
+      summary: Get all reservations
+      responses:
+        '200':
+          description: A list of reservations
+    post:
+      summary: Create a new reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        '200':
+          description: Created
+
+  /api/reservations/{id}:
+    get:
+      summary: Get a specific reservation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Reservation ID
+      responses:
+        '200':
+          description: Reservation details
+
+  /api/users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: A list of users
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Created
+
+  /api/users/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Logged in successfully
+
+  /api/users/logout:
+    delete:
+      summary: User logout
+      responses:
+        '200':
+          description: Logged out successfully
+
+components:
+  schemas:
+    Boat:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        finance:
+          type: integer
+        option:
+          type: integer
+        amount:
+          type: integer
+        duration:
+          type: integer
+        availability:
+          type: boolean
+      required:
+        - name
+        - description
+        - image
+        - finance
+        - option
+        - amount
+        - duration
+        - availability
+
+    Reservation:
+      type: object
+      properties:
+        id:
+          type: integer
+        boat_id:
+          type: integer
+        user_id:
+          type: integer
+        date:
+          type: string
+          format: date
+        city:
+          type: string
+      required:
+        - boat_id
+        - user_id
+        - date
+        - city
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      required:
+        - name
+
+    LoginRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+servers:
+  - url: https://boat-cruise-reservation-api.onrender.com/
+    description: Production Server

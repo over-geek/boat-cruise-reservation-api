@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   namespace :api do
     resources :boats, only: [:index, :show, :create]
     resources :reservations, only: [:create, :index, :show]
@@ -8,8 +10,6 @@ Rails.application.routes.draw do
       delete 'logout', to: 'users#logout'
     end
 
-    # Return a JSON response for the root path
-    root to: proc { [200, {}, ['{"message": "API is running"}']] }
   end
   end
 
